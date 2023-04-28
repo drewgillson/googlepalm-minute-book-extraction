@@ -68,18 +68,18 @@ def Parser(sorted_files):
 # The following functions use a large language model to perform question & answer-style extraction from a minute book
 
 
-def extract_directors_quorum(content):
+def extract_directors_quorum(content, entity_name):
     prompt = PromptTemplate(
-        input_variables=["content"],
-        template="""What constitutes quorum for meetings of directors where only one director is
-                    present? How about when two or more directors are present? Is a majority of
-                    directors required for quorum? Explain in a concise paragraph. THINK: Do not
-                    explain quorum for meetings of shareholders, this is irrelevant to directors.
+        input_variables=["content", "entity_name"],
+        template="""What constitutes quorum for meetings of directors of {entity_name} where only
+                    one director is present? How about when two or more directors are present? Is
+                    a majority of directors required for quorum? Explain in a concise paragraph.
+                    THINK: Do not explain quorum for meetings of shareholders, this is irrelevant.
                     Passage:
                     {content}
                     Director Quorum:""")
 
-    directors_quorum_candidate = LLMChain(llm=GooglePalm(temperature=0.5),
+    directors_quorum_candidate = LLMChain(llm=GooglePalm(temperature=0.5, max_output_tokens=512),
                                           prompt=prompt)
 
     return directors_quorum_candidate.predict(content=content).strip()
@@ -94,7 +94,7 @@ def extract_shareholders_quorum(content):
                     {content}
                     Shareholder Quorum:""")
 
-    shareholders_quorum_candidate = LLMChain(llm=GooglePalm(temperature=0.5),
+    shareholders_quorum_candidate = LLMChain(llm=GooglePalm(temperature=0.5, max_output_tokens=512),
                                              prompt=prompt)
 
     return shareholders_quorum_candidate.predict(content=content).strip()

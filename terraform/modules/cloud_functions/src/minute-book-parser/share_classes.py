@@ -76,7 +76,7 @@ def extract_share_classes(content):
                         "share_class": string  // Name of class of shares (example: Class A, Class B or Common, Preferred)
                         "voting_rights": string  // Yes or no
                         "votes_per_share": string // Number of votes per share
-                        "notes": string  // Summary of rights, privileges, restrictions, and conditions
+                        "notes": string  // Summarize rights, privileges, restrictions, and conditions
                         }},
                         // Repeat for each share class found
                     }}
@@ -85,7 +85,7 @@ def extract_share_classes(content):
                     Share Classes JSON:""")
 
     chain = LLMChain(llm=GooglePalm(temperature=0.5,
-                                max_tokens=1024),
+                                    max_output_tokens=1024),
                      prompt=prompt)
 
     output = chain.predict(content=content)

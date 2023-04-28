@@ -115,7 +115,7 @@ def extract_election_of_officers(content):
                     Officers JSON:""")
 
     chain = LLMChain(llm=GooglePalm(temperature=0.2,
-                                max_tokens=1024),
+                                    max_output_tokens=1024),
                      prompt=prompt)
 
     output = chain.predict(content=content).strip()
