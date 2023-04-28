@@ -112,7 +112,8 @@ def extract_entity_details(content):
                     {content}
                     JSON:""")
 
-    chain = LLMChain(llm=GooglePalm(temperature=0.4),
+    chain = LLMChain(llm=GooglePalm(temperature=0.4,
+                                    max_output_tokens=1024),
                      prompt=prompt)
 
     output = chain.predict(content=content)
