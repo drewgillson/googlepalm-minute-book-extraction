@@ -2,7 +2,7 @@ import main
 import json
 import re
 from langchain.prompts import PromptTemplate
-from langchain.llms import GooglePalm
+from langchain.llms import VertexAI
 from langchain.chains import LLMChain
 
 
@@ -114,8 +114,8 @@ def extract_election_of_officers(content):
                     {content}
                     Officers JSON:""")
 
-    chain = LLMChain(llm=GooglePalm(temperature=0.2,
-                                    max_output_tokens=1024),
+    chain = LLMChain(llm=VertexAI(model_name="text-bison", temperature=0.2,
+                                  max_output_tokens=1024),
                      prompt=prompt)
 
     output = chain.predict(content=content).strip()

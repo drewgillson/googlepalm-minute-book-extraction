@@ -4,7 +4,7 @@ import json
 import os
 import tiktoken
 from langchain.prompts import PromptTemplate
-from langchain.llms import GooglePalm
+from langchain.llms import VertexAI
 from langchain.chains import LLMChain
 from google.cloud import storage
 import concurrent.futures
@@ -219,8 +219,8 @@ def extract_address_for_person(person, sorted_files):
                             {content}
                             Address:""")
 
-            chain = LLMChain(llm=GooglePalm(temperature=0.5,
-                                            max_output_tokens=512),
+            chain = LLMChain(llm=VertexAI(model_name="text-bison", temperature=0.5,
+                                          max_output_tokens=512),
                              prompt=prompt)
 
             address = chain.predict(person=person, reverse_name=reverse_name, content=content)

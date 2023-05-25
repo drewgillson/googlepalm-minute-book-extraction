@@ -2,7 +2,7 @@ import main
 import json
 import re
 from langchain.prompts import PromptTemplate
-from langchain.llms import GooglePalm
+from langchain.llms import VertexAI
 from langchain.chains import LLMChain
 
 
@@ -73,7 +73,7 @@ def extract_entity_name(content):
                     {content}
                     Entity:""")
 
-    chain = LLMChain(llm=GooglePalm(temperature=0.2),
+    chain = LLMChain(llm=VertexAI(model_name="text-bison", temperature=0.2),
                      prompt=prompt)
 
     return chain.predict(content=content).strip().upper()
@@ -87,7 +87,7 @@ def extract_tax_id_number(content):
                     {content}
                     Entity:""")
 
-    chain = LLMChain(llm=GooglePalm(temperature=0.2),
+    chain = LLMChain(llm=VertexAI(model_name="text-bison", temperature=0.2),
                      prompt=prompt)
 
     return chain.predict(content=content).strip()
@@ -112,8 +112,8 @@ def extract_entity_details(content):
                     {content}
                     JSON:""")
 
-    chain = LLMChain(llm=GooglePalm(temperature=0.4,
-                                    max_output_tokens=1024),
+    chain = LLMChain(llm=VertexAI(model_name="text-bison", temperature=0.4,
+                                  max_output_tokens=1024),
                      prompt=prompt)
 
     output = chain.predict(content=content)

@@ -1,6 +1,6 @@
 import main
 from langchain.prompts import PromptTemplate
-from langchain.llms import GooglePalm
+from langchain.llms import VertexAI
 from langchain.chains import LLMChain
 
 
@@ -79,7 +79,7 @@ def extract_directors_quorum(content, entity_name):
                     {content}
                     Director Quorum:""")
 
-    directors_quorum_candidate = LLMChain(llm=GooglePalm(temperature=0.5, max_output_tokens=512),
+    directors_quorum_candidate = LLMChain(llm=VertexAI(model_name="text-bison", temperature=0.5, max_output_tokens=512),
                                           prompt=prompt)
 
     return directors_quorum_candidate.predict(content=content).strip()
@@ -94,7 +94,7 @@ def extract_shareholders_quorum(content):
                     {content}
                     Shareholder Quorum:""")
 
-    shareholders_quorum_candidate = LLMChain(llm=GooglePalm(temperature=0.5, max_output_tokens=512),
+    shareholders_quorum_candidate = LLMChain(llm=VertexAI(model_name="text-bison", temperature=0.5, max_output_tokens=512),
                                              prompt=prompt)
 
     return shareholders_quorum_candidate.predict(content=content).strip()

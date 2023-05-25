@@ -1,6 +1,6 @@
 import main
 from langchain.prompts import PromptTemplate
-from langchain.llms import GooglePalm
+from langchain.llms import VertexAI
 from langchain.chains import LLMChain
 
 
@@ -57,7 +57,7 @@ def extract_other_restrictions(content):
                     {content}
                     Other Restrictions:""")
 
-    chain = LLMChain(llm=GooglePalm(temperature=0.2,
+    chain = LLMChain(llm=VertexAI(model_name="text-bison", temperature=0.2,
                                     max_output_tokens=512),
                      prompt=prompt)
 
@@ -80,8 +80,8 @@ def extract_transfer_restrictions(content):
                     {content}
                     Share Transfer Restrictions:""")
 
-    chain = LLMChain(llm=GooglePalm(temperature=0.2,
-                                    max_output_tokens=512),
+    chain = LLMChain(llm=VertexAI(model_name="text-bison", temperature=0.2,
+                                  max_output_tokens=512),
                      prompt=prompt)
 
     output = chain.predict(content=content).strip()
@@ -101,8 +101,8 @@ def extract_other_provisions(content):
                     {content}
                     Other Provisions:""")
 
-    chain = LLMChain(llm=GooglePalm(temperature=0.2,
-                                    max_output_tokens=512),
+    chain = LLMChain(llm=VertexAI(model_name="text-bison", temperature=0.2,
+                                  max_output_tokens=512),
                      prompt=prompt)
 
     output = chain.predict(content=content).strip()
